@@ -44,6 +44,8 @@ void init_cube(t_cube *cube, char *file)
     cube->win = mlx_new_window(cube->mlx, SCREEN_W, SCREEN_H, "Cube3d");
     cube->img = ft_calloc(sizeof(t_image), 1);
     cube->img->img = mlx_new_image(cube->mlx, SCREEN_W, SCREEN_H);
+    cube->img->addr = mlx_get_data_addr(cube->img->img, &cube->img->bpp, &cube->img->size_line, &cube->img->endian);
+    mlx_put_image_to_window(cube->mlx, cube->win, cube->img, 0, 0);
 }
 
 int main(int argc, char **argv) {
@@ -52,6 +54,8 @@ int main(int argc, char **argv) {
     check_errors(argc, argv);
     init_cube(&cube, argv[1]);
     draw_minimap(&cube);
+    mlx_loop_hook(&cube.mlx, draw_minimap, &cube);
+    mlx_loop(&cube.mlx);
     free_cube(&cube);
     return 0;
 }

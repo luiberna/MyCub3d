@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:44:49 by luiberna          #+#    #+#             */
-/*   Updated: 2025/01/28 19:47:52 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/01/28 21:01:06 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,15 @@
 # define W 3
 
 //Screen sizes
-# define SCREEN_W 1920
-# define SCREEN_H 1080
+# define SCREEN_W 1080
+# define SCREEN_H 600
 
 typedef struct s_image
 {
     void    *img;
-    int     *addr;
+    char     *addr;
     int     bpp;
+    int     size_line;
     int     endian;
     int     width;
     int     height;
@@ -106,7 +107,8 @@ char **get_textures(char *file);
 void free_cube(t_cube *cube);
 
 //Minimap
-void draw_minimap(t_cube *cube);
-void draw_cube(t_cube *cube, char c, int i, int j);
+int draw_minimap(t_cube *cube);
+void draw_square(int x, int y, int size, int color, t_cube *cube);
+void put_pixel(int x, int y, int color, t_cube *cube);
 
 # endif
