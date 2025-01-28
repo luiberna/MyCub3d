@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:44:49 by luiberna          #+#    #+#             */
-/*   Updated: 2025/01/28 21:01:06 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/01/28 21:40:36 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@
 # define E 1
 # define S 2
 # define W 3
+
+# define KW 119
+# define A 97
+# define KS 115
+# define D 100
+# define LEFT 65361
+# define RIGHT 65363
 
 //Screen sizes
 # define SCREEN_W 1080
@@ -72,8 +79,18 @@ typedef struct s_player
     double  pix_pos_y;
     double  plane_x;
     double  plane_y;
-    int     pos_x;
-    int     pos_y;
+    double     pos_x;
+    double     pos_y;
+    
+    bool key_up;
+    bool key_down;
+    bool key_left;
+    bool key_right;
+
+    bool left_rotate;
+    bool right_rotate;
+
+    double angle;
     
 }               t_player;
 
