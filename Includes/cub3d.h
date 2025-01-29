@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:44:49 by luiberna          #+#    #+#             */
-/*   Updated: 2025/01/29 00:08:10 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/01/29 02:05:32 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@
 # include "../minilibx-linux/mlx_int.h"
 
 //Angles and movment
-# define SPEED 0.03
+# define SPEED 0.01
 # define RSPEED 0.03
 # define PI 3.14159265
 # define CUBE 64
+# define COLLISION_BUFFER 0.4
 
 //Texture arrays
 # define N 0
@@ -136,6 +137,15 @@ void put_pixel(int x, int y, int color, t_cube *cube);
 int key_press(int keycode, t_cube *cube);
 int key_release(int keycode, t_cube *cube);
 void move_player(t_player *player, char **map);
-void move_player2(t_player *player, double sin_angle, double cos_angle);
+void move_player2(t_player *player, char **map, double sin_angle, double cos_angle);
+void move_player3(t_player *player, char **map, double sin_angle, double cos_angle);
+void check_movement(t_player *player, char **map, double new_x, double new_y);
+
+
+//Init
+void init_cube(t_cube *cube, char *file);
+void init_data(t_data *data, char *file);
+void init_player(t_data *data, t_player *player);
+void get_player_position(t_data *data, t_player *player);
 
 # endif

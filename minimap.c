@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:12:53 by luiberna          #+#    #+#             */
-/*   Updated: 2025/01/28 22:38:24 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/01/29 02:11:39 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,29 @@ void draw_square(int x, int y, int size, int color, t_cube *cube)
     }
 }
 
-int draw_minimap(t_cube *cube) {
-    int tile_size = 10; // Adjust this if needed
+int draw_minimap(t_cube *cube)
+{
+    int i;
+    int j;
+    int tile_size; // Adjust this if needed
 
-    // Clear the screen before redrawing (set all pixels to black)
+    tile_size = 16;
+    j = 0;
     mlx_clear_window(cube->mlx, cube->win);
-
-    // Draw the map (walls and floor)
-    for (int j = 0; cube->data->map[j]; j++) {
-        for (int i = 0; cube->data->map[j][i]; i++) {
-            if (cube->data->map[j][i] == '1') // Walls
+    while (cube->data->map[j])
+    {
+        i = 0;
+        while (cube->data->map[j][i])
+        {
+            if (cube->data->map[j][i] == '1')
                 draw_square(i * tile_size, j * tile_size, tile_size, 0xFFFFFF, cube);
-            else if (cube->data->map[j][i] == '0') // Floor
+            else if (cube->data->map[j][i] == '0')
                 draw_square(i * tile_size, j * tile_size, tile_size, 0x000000, cube);
+            i++;
         }
+        j++;
     }
-
-    // Draw the player on top of the map (Green)
     draw_square(cube->player->pos_x * tile_size, cube->player->pos_y * tile_size, tile_size / 2, 0x00FF00, cube);
-
-    // Refresh the window
     mlx_put_image_to_window(cube->mlx, cube->win, cube->img->img, 0, 0);
     return 0;
 }

@@ -6,13 +6,13 @@
 #    By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 12:32:15 by luiberna          #+#    #+#              #
-#    Updated: 2025/01/28 23:43:24 by luiberna         ###   ########.fr        #
+#    Updated: 2025/01/29 00:26:02 by luiberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
-SRCS = main.c utils.c map.c textures.c free.c minimap.c movement.c
+SRCS = main.c utils.c map.c textures.c free.c minimap.c movement.c init.c
 
 CC = cc
 
