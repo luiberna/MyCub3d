@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 19:08:27 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/03 21:26:22 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/03 23:30:10 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ void free_cube(t_cube *cube)
     if (cube->data) {
         if (cube->data->texture_buffer) {
             for (i = 0; i < 4; i++) {
+                if (cube->data->texture_buffer[i]) {
                     free(cube->data->texture_buffer[i]);
-                    cube->data->texture_buffer[i] = NULL;
+                }
+                cube->data->texture_buffer[i] = NULL;
             }
             free(cube->data->texture_buffer);
             cube->data->texture_buffer = NULL;
@@ -96,6 +98,8 @@ void free_cube(t_cube *cube)
     }
     if (cube->win)
         mlx_destroy_window(cube->mlx, cube->win);
-    if (cube->mlx)
+    if (cube->mlx) {
+        mlx_destroy_display(cube->mlx);
         free(cube->mlx);
+    }
 }

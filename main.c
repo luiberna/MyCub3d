@@ -151,6 +151,8 @@ void img_to_texture_buff(t_data *data, t_image *img, int dir)
         }
         i++;
     }
+    if (data->texture_buffer[dir])
+        free(data->texture_buffer[dir]);
     data->texture_buffer[dir] = pixels;
 }
 //Pode estar errado
@@ -297,5 +299,6 @@ int main(int argc, char **argv)
     mlx_loop_hook(cube.mlx, update_game, &cube);
     mlx_hook(cube.win, 17, 0, close_window, &cube);
     mlx_loop(cube.mlx);
+    free_cube(&cube);
     return 0;
 }
