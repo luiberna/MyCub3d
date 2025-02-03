@@ -6,13 +6,13 @@
 #    By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 12:32:15 by luiberna          #+#    #+#              #
-#    Updated: 2025/01/29 00:26:02 by luiberna         ###   ########.fr        #
+#    Updated: 2025/02/03 20:18:09 by luiberna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
-SRCS = main.c utils.c map.c textures.c free.c minimap.c movement.c init.c
+SRCS = main.c utils.c map.c textures.c free.c minimap.c movement.c init.c init_aux.c keys.c
 
 CC = cc
 
@@ -39,7 +39,7 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)Compiling $(NAME)...$(RESET)"
 	@make -C ./Libft > /dev/null 2>&1
 	@make -C $(MINILIBX) > /dev/null 2>&1
-	@$(CC) $(CFLAGS) $(OBJS) ./Libft/libft.a -o $(NAME) $(LIB_MINILIBX) # > /dev/null 2>&1
+	@$(CC) $(CFLAGS) $(OBJS) ./Libft/libft.a -o $(NAME) $(LIB_MINILIBX)  > /dev/null 2>&1
 	@echo "$(GREEN)$(NAME) compiled successfully!$(RESET)"
 
 %.o: %.c

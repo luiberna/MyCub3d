@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 00:25:47 by luiberna          #+#    #+#             */
-/*   Updated: 2025/01/29 02:08:44 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:06:52 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ void get_player_position(t_data *data, t_player *player)
     int y;
     
     y = 0;
-    while (data->map[y]) {
+    while (data->map[y])
+    {
         x = 0;
-        while (data->map[y][x]) {
-            if (data->map[y][x] == 'N' || data->map[y][x] == 'E' || data->map[y][x] == 'S' || data->map[y][x] == 'W') {
+        while (data->map[y][x])
+        {
+            if (data->map[y][x] == 'N' || data->map[y][x] == 'E' || data->map[y][x] == 'S' || data->map[y][x] == 'W')
+            {
+                player->looking = data->map[y][x];
                 player->pos_x = x;
                 player->pos_y = y;
                 return ;
@@ -32,29 +36,62 @@ void get_player_position(t_data *data, t_player *player)
     }
 }
 
+void init_player2(t_player *player)
+{
+    if (player->looking == 'E')
+    {
+        player->dir_x = 1.0;
+        player->dir_y = 0.0;
+        player->plane_x = 0.0;
+        player->plane_y = 0.66;
+    }
+    else if (player->looking == 'W')
+    {
+        player->dir_x = -1.0;
+        player->dir_y = 0.0;
+        player->plane_x = 0.0;
+        player->plane_y = -0.66;
+    }
+}
+
 void init_player(t_data *data, t_player *player)
 {
     get_player_position(data, player);
     player->angle = PI / 2;
-
     player->key_up = false;
     player->key_down = false;
     player->key_right = false;
     player->key_left = false;
-
     player->left_rotate = false;
     player->right_rotate = false;
+    if (player->looking == 'N')
+    {
+        player->dir_x = 0.0;
+        player->dir_y = -1.0;
+        player->plane_x = 0.66;
+        player->plane_y = 0.0;
+    }
+    else if (player->looking == 'S')
+    {
+        player->dir_x = 0.0;
+        player->dir_y = 1.0;
+        player->plane_x = -0.66;
+        player->plane_y = 0.0;
+    }
+    init_player2(player);
 }
 
 void init_data(t_data *data, char *file)
 {
     data->map = get_map(file);
     //print_map(data->map);
+    init_pixel_map(data);
     data->map_height = get_map_height(file);
     data->map_width = get_map_width(data);
-    data->pixel_map = get_pixel_map(data);
     //data->rff_map = 
     data->textures = get_textures(file);
+    init_texture_buffer(data);
+    init_color(data, file);
 }
 
 void init_cube(t_cube *cube, char *file)

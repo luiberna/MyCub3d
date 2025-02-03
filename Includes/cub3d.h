@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:44:49 by luiberna          #+#    #+#             */
-/*   Updated: 2025/01/29 02:05:32 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:17:55 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@
 # include "../minilibx-linux/mlx_int.h"
 
 //Angles and movment
-# define SPEED 0.01
-# define RSPEED 0.03
+# define SPEED 0.02
+# define RSPEED 0.01
 # define PI 3.14159265
 # define CUBE 64
-# define COLLISION_BUFFER 0.4
+#define EPSILON 1e-30
 
 //Texture arrays
 # define N 0
@@ -48,8 +48,16 @@
 #define RIGHT 65363
 
 //Screen sizes
-# define SCREEN_W 1080
-# define SCREEN_H 600
+# define SCREEN_W 1400
+# define SCREEN_H 720
+
+typedef struct s_color
+{
+	int red;
+	int green;
+	int blue;
+	int	hex_color; //Color in Hexadecimal
+}              t_color;
 
 typedef struct s_image
 {
@@ -74,6 +82,8 @@ typedef struct s_data
     char        **textures;
     int         **texture_buffer;
     int         **pixel_map;
+    int         ceiling_color[3];
+    int         floor_color[3];
 }               t_data;
 
 typedef struct s_player
@@ -86,6 +96,7 @@ typedef struct s_player
     double      plane_y;
     double      pos_x;
     double      pos_y;
+    char        looking;
     
     bool        key_up;
     bool        key_down;
@@ -99,6 +110,40 @@ typedef struct s_player
     
 }               t_player;
 
+typedef struct s_ray
+{
+    double      camera_x;
+
+    double      ray_dir_x;
+    double      ray_dir_y;
+
+    double      delta_dist_x;
+    double      delta_dist_y;
+    
+    int         step_x;
+    int         step_y;
+
+    int         map_x;
+    int         map_y;
+
+    double      side_dist_x;
+    double      side_dist_y;
+
+    int         side;
+
+    double      wall_dist;
+    double      wall_height;
+
+    double      wall_x;
+
+    int         text_x;
+
+    int         start_pos_draw;
+    int         end_pos_draw;
+
+    int         hit;
+}           t_ray;
+
 typedef struct s_cube
 {
     void        *mlx;
@@ -106,7 +151,8 @@ typedef struct s_cube
     t_image     *img;
     t_player    *player;
     t_data      *data;
-}               t_cube;
+    t_ray       *ray;
+}           t_cube;
 
 //Functions:
 
@@ -120,32 +166,45 @@ void print_map(char **map);
 int get_map_height(char *file);
 char **get_map(char *file);
 int get_map_width(t_data *data);
-int **get_pixel_map(t_data *data);
 
 //Textures
 char **get_textures(char *file);
 
 //Free
 void free_cube(t_cube *cube);
+void clear_image(t_cube *cube);
+int close_window(t_cube *cube);
+void clear_pixel_map(t_data *data);
 
 //Minimap
 int  draw_minimap(t_cube *cube);
 void draw_square(int x, int y, int size, int color, t_cube *cube);
 void put_pixel(int x, int y, int color, t_cube *cube);
 
-//Keys & Movement
+//Keys
 int key_press(int keycode, t_cube *cube);
 int key_release(int keycode, t_cube *cube);
+
+//Movement
 void move_player(t_player *player, char **map);
-void move_player2(t_player *player, char **map, double sin_angle, double cos_angle);
+void move_player2(t_player *player, char **map);
 void move_player3(t_player *player, char **map, double sin_angle, double cos_angle);
 void check_movement(t_player *player, char **map, double new_x, double new_y);
-
 
 //Init
 void init_cube(t_cube *cube, char *file);
 void init_data(t_data *data, char *file);
 void init_player(t_data *data, t_player *player);
+void init_player2(t_player *player);
 void get_player_position(t_data *data, t_player *player);
+
+//Init_Aux
+void    init_texture_buffer(t_data *data);
+void    init_pixel_map(t_data *data);
+void    init_color(t_data *data, char *file);
+
+//Color
+int *get_color(char *file, char *type);
+
 
 # endif

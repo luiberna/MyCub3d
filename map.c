@@ -6,13 +6,14 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 20:16:20 by luiberna          #+#    #+#             */
-/*   Updated: 2025/01/28 16:31:12 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/01/30 23:21:58 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/cub3d.h"
 
-int get_map_width(t_data *data) {
+int get_map_width(t_data *data)
+{
     int i;
     unsigned long len;
 
@@ -26,7 +27,8 @@ int get_map_width(t_data *data) {
     return (len);
 }
 
-int get_map_height(char *file) {
+int get_map_height(char *file)
+{
     int i;
     char *line;
     int fd;
@@ -50,7 +52,8 @@ int get_map_height(char *file) {
     return i;
 }
 
-char **get_map(char *file) {
+char **get_map(char *file)
+{
     int i;
     char **map;
     char *line;
@@ -75,20 +78,6 @@ char **get_map(char *file) {
     free(line);
     map[i] = NULL;
     close(fd);
-    return map;
+    return (map);
 }
 
-int **get_pixel_map(t_data *data) {
-    int i;
-    int **pixel_map;
-
-    i = 0;
-    pixel_map = ft_calloc(sizeof(int *), SCREEN_H + 1);
-    while(i < SCREEN_H) {
-        pixel_map[i] = ft_calloc(sizeof(int), SCREEN_W);
-        if (!pixel_map[i])
-            print_error("Error: Can't allocate pixel map\n");
-        i++;
-    }
-    return (pixel_map);
-}
