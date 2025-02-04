@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:44:49 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/03 20:17:55 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/04 20:40:51 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_color
 	int red;
 	int green;
 	int blue;
-	int	hex_color; //Color in Hexadecimal
+	int	hex_color;
 }              t_color;
 
 typedef struct s_image
@@ -84,6 +84,7 @@ typedef struct s_data
     int         **pixel_map;
     int         ceiling_color[3];
     int         floor_color[3];
+    int         map_position;
 }               t_data;
 
 typedef struct s_player
@@ -97,15 +98,13 @@ typedef struct s_player
     double      pos_x;
     double      pos_y;
     char        looking;
-    
     bool        key_up;
     bool        key_down;
     bool        key_left;
     bool        key_right;
-
     bool        left_rotate;
     bool        right_rotate;
-
+    bool        minimap;
     double      angle;
     
 }               t_player;
@@ -113,34 +112,23 @@ typedef struct s_player
 typedef struct s_ray
 {
     double      camera_x;
-
     double      ray_dir_x;
     double      ray_dir_y;
-
     double      delta_dist_x;
     double      delta_dist_y;
-    
     int         step_x;
     int         step_y;
-
     int         map_x;
     int         map_y;
-
     double      side_dist_x;
     double      side_dist_y;
-
     int         side;
-
     double      wall_dist;
     double      wall_height;
-
     double      wall_x;
-
     int         text_x;
-
     int         start_pos_draw;
     int         end_pos_draw;
-
     int         hit;
 }           t_ray;
 
@@ -158,17 +146,20 @@ typedef struct s_cube
 
 //Utils
 bool check_file(char *str);
-void print_error(char *str);
+void print_error(t_cube *cube, char *str);
 void check_errors(int argc, char **argv);
 void print_map(char **map);
 
 //Map
-int get_map_height(char *file);
-char **get_map(char *file);
+int get_map_height(t_data *data, char *file);
+char **get_map(t_data *data, char *file);
 int get_map_width(t_data *data);
+void map_position(t_data *data, char *file);
 
 //Textures
-char **get_textures(char *file);
+char    **get_textures(char *file);
+void	load_textures(t_cube *cube, t_data *data);
+void    img_to_texture_buff(t_cube *cube, t_data *data, t_image *img, int dir);
 
 //Free
 void free_cube(t_cube *cube);
@@ -193,18 +184,20 @@ void check_movement(t_player *player, char **map, double new_x, double new_y);
 
 //Init
 void init_cube(t_cube *cube, char *file);
-void init_data(t_data *data, char *file);
+void init_data(t_cube *cube, t_data *data, char *file);
 void init_player(t_data *data, t_player *player);
 void init_player2(t_player *player);
 void get_player_position(t_data *data, t_player *player);
 
 //Init_Aux
-void    init_texture_buffer(t_data *data);
-void    init_pixel_map(t_data *data);
+void    init_texture_buffer(t_cube *cube, t_data *data);
+void    init_pixel_map(t_cube *cube,t_data *data);
 void    init_color(t_data *data, char *file);
+void    init_ray(t_data *data, t_player *player, t_ray *ray, int x);
 
 //Color
-int *get_color(char *file, char *type);
-
+int     *get_color(char *file, char *type);
+void    get_rgb(char *line, int *color);
+int     get_hex_color(int r, int g, int b);
 
 # endif

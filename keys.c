@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:18:14 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/03 20:18:42 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/04 20:42:20 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int key_press(int keycode, t_cube *cube)
 {
+    if (keycode == 109)
+        cube->player->minimap = !cube->player->minimap;
+    if (keycode == 65307)
+        close_window(cube);
     if(keycode == KW)
         cube->player->key_up = true;
     if(keycode == KS)
