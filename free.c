@@ -6,99 +6,102 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 19:08:27 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/03 23:30:10 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:12:28 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/cub3d.h"
 
-void clear_pixel_map(t_data *data)
+void free_texture_buffer(t_data *data)
 {
-    int x;
-    int y;
+    int i;
 
-    y = 0;
-    while(y < SCREEN_H)
+    if (data->texture_buffer)
     {
-        x = 0;
-        while (x < SCREEN_W)
+        i = 0;
+        while (i < 4)
         {
-            data->pixel_map[y][x] = 0;
-            x++;
+            if (data->texture_buffer[i])
+                free(data->texture_buffer[i]);
+            data->texture_buffer[i] = NULL;
+            i++;
         }
-        y++;
+        free(data->texture_buffer);
+        data->texture_buffer = NULL;
     }
 }
 
-void clear_image(t_cube *cube)
+void free_textures(t_data *data)
 {
-    int x;
-    int y;
+    int i;
 
-    y = 0;
-    while (y < SCREEN_H)
+    if (data->textures)
     {
-        x = 0;
-        while (x < SCREEN_W) 
+        i = 0;
+        while (i < 4)
         {
-            put_pixel(x, y, 0x000000, cube);
-            x++;
+            free(data->textures[i]);
+            i++;
         }
-        y++;
+        free(data->textures);
     }
 }
 
-int close_window(t_cube *cube)
+void free_map(t_data *data)
 {
-    free_cube(cube);
-    exit(0);
-    return 0;
+    int i;
+
+    if (data->map)
+    {
+        i = 0;
+        while (data->map[i])
+        {
+            free(data->map[i]);
+            i++;
+        }
+        free(data->map);
+    }
+}
+
+void free_pixel_map(t_data *data)
+{
+    int i;
+
+    if (data->pixel_map)
+    {
+        i = 0;
+        while (i < SCREEN_H)
+        {
+            if (data->pixel_map[i])
+                free(data->pixel_map[i]);
+            i++;
+        }
+        free(data->pixel_map);
+    }
 }
 
 void free_cube(t_cube *cube)
 {
-    int i;
-
-    if (cube->data) {
-        if (cube->data->texture_buffer) {
-            for (i = 0; i < 4; i++) {
-                if (cube->data->texture_buffer[i]) {
-                    free(cube->data->texture_buffer[i]);
-                }
-                cube->data->texture_buffer[i] = NULL;
-            }
-            free(cube->data->texture_buffer);
-            cube->data->texture_buffer = NULL;
-        }
-        if (cube->data->textures) {
-            for (i = 0; i < 4; i++)
-                free(cube->data->textures[i]);
-            free(cube->data->textures);
-        }
-        if (cube->data->map) {
-            for (i = 0; cube->data->map[i]; i++)
-                free(cube->data->map[i]);
-            free(cube->data->map);
-        }
-        if (cube->data->pixel_map) {
-            for (i = 0; i < SCREEN_H; i++) {
-                if (cube->data->pixel_map[i])
-                    free(cube->data->pixel_map[i]);
-            }
-            free(cube->data->pixel_map);
-        }
+    if (cube->data)
+    {
+        free_texture_buffer(cube->data);
+        free_textures(cube->data);
+        free_map(cube->data);
+        free_pixel_map(cube->data);
         free(cube->data);
     }
     if (cube->player)
         free(cube->player);
-    if (cube->img) {
+    if (cube->img)
+    {
         if (cube->img->img)
             mlx_destroy_image(cube->mlx, cube->img->img);
         free(cube->img);
     }
     if (cube->win)
         mlx_destroy_window(cube->mlx, cube->win);
-    if (cube->mlx) {
+    if (cube->mlx)
+    {
         mlx_destroy_display(cube->mlx);
         free(cube->mlx);
     }

@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:44:49 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/04 20:40:51 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:10:48 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,49 +145,60 @@ typedef struct s_cube
 //Functions:
 
 //Utils
-bool check_file(char *str);
-void print_error(t_cube *cube, char *str);
-void check_errors(int argc, char **argv);
-void print_map(char **map);
+bool    check_file(char *str);
+void    print_error(t_cube *cube, char *str);
+void    check_errors(int argc, char **argv);
+void    print_map(char **map);
 
 //Map
-int get_map_height(t_data *data, char *file);
-char **get_map(t_data *data, char *file);
-int get_map_width(t_data *data);
-void map_position(t_data *data, char *file);
+char    **get_map(t_data *data, char *file);
+void    map_position(t_data *data, char *file);
+void    count_config_lines(t_data *data, int fd, int *count, int *flag);
+void    count_empty_lines(int fd, int *count);
+
+//Map_Utils
+int     get_map_height(t_data *data, char *file);
+int     get_map_width(t_data *data);
 
 //Textures
 char    **get_textures(char *file);
 void	load_textures(t_cube *cube, t_data *data);
 void    img_to_texture_buff(t_cube *cube, t_data *data, t_image *img, int dir);
 
+//Clear
+void    clear_image(t_cube *cube);
+void    clear_pixel_map(t_data *data);
+int     close_window(t_cube *cube);
+
+
 //Free
-void free_cube(t_cube *cube);
-void clear_image(t_cube *cube);
-int close_window(t_cube *cube);
-void clear_pixel_map(t_data *data);
+void    free_cube(t_cube *cube);
+void free_pixel_map(t_data *data);
+void free_map(t_data *data);
+void free_textures(t_data *data);
+void free_texture_buffer(t_data *data);
 
 //Minimap
-int  draw_minimap(t_cube *cube);
-void draw_square(int x, int y, int size, int color, t_cube *cube);
-void put_pixel(int x, int y, int color, t_cube *cube);
+int     draw_minimap(t_cube *cube);
+void    draw_square(int x, int y, int size, int color, t_cube *cube);
+void    put_pixel(int x, int y, int color, t_cube *cube);
 
 //Keys
-int key_press(int keycode, t_cube *cube);
-int key_release(int keycode, t_cube *cube);
+int     key_press(int keycode, t_cube *cube);
+int     key_release(int keycode, t_cube *cube);
 
 //Movement
-void move_player(t_player *player, char **map);
-void move_player2(t_player *player, char **map);
-void move_player3(t_player *player, char **map, double sin_angle, double cos_angle);
-void check_movement(t_player *player, char **map, double new_x, double new_y);
+void    move_player(t_player *player, char **map);
+void    move_player2(t_player *player, char **map);
+void    move_player3(t_player *player, char **map, double sin_angle, double cos_angle);
+void    check_movement(t_player *player, char **map, double new_x, double new_y);
 
 //Init
-void init_cube(t_cube *cube, char *file);
-void init_data(t_cube *cube, t_data *data, char *file);
-void init_player(t_data *data, t_player *player);
-void init_player2(t_player *player);
-void get_player_position(t_data *data, t_player *player);
+void    init_cube(t_cube *cube, char *file);
+void    init_data(t_cube *cube, t_data *data, char *file);
+void    init_player(t_data *data, t_player *player);
+void    init_player2(t_player *player);
+void    get_player_position(t_data *data, t_player *player);
 
 //Init_Aux
 void    init_texture_buffer(t_cube *cube, t_data *data);
@@ -199,5 +210,23 @@ void    init_ray(t_data *data, t_player *player, t_ray *ray, int x);
 int     *get_color(char *file, char *type);
 void    get_rgb(char *line, int *color);
 int     get_hex_color(int r, int g, int b);
+
+//Check
+void    verify_player(t_cube *cube, t_data *data);
+void    verify_closed_map(t_cube *cube, t_data *data);
+void    verify_map(t_cube *cube, t_data *data);
+
+//Draw
+void    draw_pixel_map(t_cube *cube, t_data *data);
+void    draw_pixel_map_content(t_cube *cube, t_data *data);
+void    draw_floor(t_cube *cube, t_data *data, int floor_color);
+void    draw_ceiling(t_cube *cube, t_data *data, int ceiling_color);
+
+//Raycasting
+void    calculate_dist(t_player *player, t_ray *ray);
+void    DDA(t_data *data, t_player *player, t_ray *ray);
+void    wall_render(t_player *player, t_ray *ray);
+int     get_direction(t_ray *ray);
+void    get_pixel_map(t_data *data, t_ray *ray, int x);
 
 # endif

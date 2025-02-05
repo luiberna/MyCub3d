@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 00:25:47 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/04 20:21:18 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/05 17:37:32 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,14 @@ void init_player(t_data *data, t_player *player)
     init_player2(player);
 }
 
+//print_map(data->map);
 void init_data(t_cube *cube, t_data *data, char *file)
 {
     map_position(data, file);
     data->map = get_map(data, file);
-    //print_map(data->map);
     init_pixel_map(cube, data);
     data->map_height = get_map_height(data, file);
     data->map_width = get_map_width(data);
-    //data->rff_map = 
     data->textures = get_textures(file);
     init_texture_buffer(cube, data);
     init_color(data, file);
@@ -112,4 +111,5 @@ void init_cube(t_cube *cube, char *file)
     if (!cube->img->img)
         print_error(cube, "ERROR: Failed to create image\n");
     cube->img->addr = mlx_get_data_addr(cube->img->img, &cube->img->bpp, &cube->img->size_line, &cube->img->endian);
+    verify_map(cube, cube->data);
 }

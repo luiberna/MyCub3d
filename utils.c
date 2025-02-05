@@ -6,16 +6,16 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:28:38 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/04 20:24:30 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:13:37 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/cub3d.h"
 
-//Test function to print map
 void print_map(char **map)
 {
-    int i = 0;
+    int i;
+    i = 0;
     while (map[i])
     {
         printf("%s\n", map[i]);
