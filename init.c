@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 00:25:47 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/05 17:37:32 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:41:04 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void get_player_position(t_data *data, t_player *player)
             if (data->map[y][x] == 'N' || data->map[y][x] == 'E' || data->map[y][x] == 'S' || data->map[y][x] == 'W')
             {
                 player->looking = data->map[y][x];
-                player->pos_x = x;
-                player->pos_y = y;
+                player->pos_x = x + 0.2;
+                player->pos_y = y + 0.2;
                 return ;
             }
             x++;
