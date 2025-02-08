@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 02:23:47 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/04 20:21:06 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:40:47 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void init_texture_buffer(t_cube *cube, t_data *data)
     }
 }
 
-void init_color(t_data *data, char *file)
+void init_color(t_cube *cube, t_data *data, char *file)
 {
     int *ceiling_color;
     int *floor_color;
 
-    ceiling_color = get_color(file, "C");
-    floor_color = get_color(file, "F");
+    ceiling_color = get_color(cube, file, "C");
+    floor_color = get_color(cube, file, "F");
     if (ceiling_color)
     {
         data->ceiling_color[0] = ceiling_color[0];

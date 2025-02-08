@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 18:38:52 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/05 19:09:45 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:58:08 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void clear_image(t_cube *cube)
         y++;
     }
 }
+
 int close_window(t_cube *cube)
 {
     free_cube(cube);

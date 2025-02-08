@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:44:25 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/04 20:24:01 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:45:05 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char **get_textures(char *file)
         line = get_next_line(fd);
     }
     free(line);
+    close(fd);
     return textures;
 }
 

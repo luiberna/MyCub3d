@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:28:38 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/05 19:13:37 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:48:03 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void print_error(t_cube *cube, char *str)
 
 void check_errors(int argc, char **argv)
 {
+    int fd;
+    
     if (argc != 2)
     {
         printf("Error: Invalid arguments\n");
@@ -52,9 +54,10 @@ void check_errors(int argc, char **argv)
         printf("Error: Invalid file\n");
         exit(1);
     }
-    else if (open(argv[1], O_RDONLY) == -1)
+    else if ((fd = open(argv[1], O_RDONLY)) == -1)
     {
         printf("Error: Can't open file\n");
         exit(1);
     }
+    close(fd);
 }

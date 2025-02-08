@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:44:49 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/05 19:10:48 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:32:40 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,6 @@ void    clear_image(t_cube *cube);
 void    clear_pixel_map(t_data *data);
 int     close_window(t_cube *cube);
 
-
 //Free
 void    free_cube(t_cube *cube);
 void free_pixel_map(t_data *data);
@@ -203,13 +202,22 @@ void    get_player_position(t_data *data, t_player *player);
 //Init_Aux
 void    init_texture_buffer(t_cube *cube, t_data *data);
 void    init_pixel_map(t_cube *cube,t_data *data);
-void    init_color(t_data *data, char *file);
+void    init_color(t_cube * cube, t_data *data, char *file);
 void    init_ray(t_data *data, t_player *player, t_ray *ray, int x);
 
 //Color
-int     *get_color(char *file, char *type);
-void    get_rgb(char *line, int *color);
+int     *get_color(t_cube *cube, char *file, char *type);
+void    get_rgb(t_cube *cube, char *line, int *color);
 int     get_hex_color(int r, int g, int b);
+void    free_color(char **color_parts);
+
+
+//Check_Color
+void    check_color5(t_cube *cube, char **color_numbers, char *line, int fd);
+void    check_color4(t_cube *cube, char **color_numbers, char *line, int fd);
+void    check_color3(t_cube *cube, char *line, int fd);
+void    check_color2(t_cube *cube, char *line, int fd);
+void    check_color(t_cube *cube, char *file);
 
 //Check
 void    verify_player(t_cube *cube, t_data *data);

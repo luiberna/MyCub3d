@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:33:50 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/05 17:34:34 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:04:01 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void verify_player(t_cube *cube, t_data *data)
         i++;
     }
     if (flag == 0 || flag > 1)
-        print_error(cube, "Error: Incorrect number of players\n");
+        print_error(cube, "Error: error on file\n");
 }
 
 void verify_closed_map(t_cube *cube, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 00:25:47 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/05 19:41:04 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:42:43 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void init_data(t_cube *cube, t_data *data, char *file)
     data->map_width = get_map_width(data);
     data->textures = get_textures(file);
     init_texture_buffer(cube, data);
-    init_color(data, file);
 }
 
 void init_cube(t_cube *cube, char *file)
@@ -112,4 +111,6 @@ void init_cube(t_cube *cube, char *file)
         print_error(cube, "ERROR: Failed to create image\n");
     cube->img->addr = mlx_get_data_addr(cube->img->img, &cube->img->bpp, &cube->img->size_line, &cube->img->endian);
     verify_map(cube, cube->data);
+    check_color(cube, file);
+    init_color(cube, cube->data, file);
 }

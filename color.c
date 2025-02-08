@@ -6,33 +6,17 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 00:05:20 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/04 17:15:46 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:42:59 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/cub3d.h"
 
-int	get_hex_color(int r, int g, int b)
+void free_color(char **color_parts)
 {
-	return (r << 16 | g << 8 | b);
-}
+    int i;
 
-void get_rgb(char *line, int *color)
-{
-    char **color_parts;
-    int i = 0;
-
-    color_parts = ft_split(line, ',');
-    if (!color_parts)
-        return;
-    color[0] = ft_atoi(color_parts[0]);
-    color[1] = ft_atoi(color_parts[1]);
-    color[2] = ft_atoi(color_parts[2]);
-    if (color[0] > 255 || color[1] > 255 || color[2] > 255)
-    {
-        printf("Some color didn't get a correct value\n");
-        exit(1);
-    }
+    i = 0;
     while (color_parts[i])
     {
         free(color_parts[i]);
@@ -41,7 +25,32 @@ void get_rgb(char *line, int *color)
     free(color_parts);
 }
 
-int *get_color(char *file, char *type)
+int	get_hex_color(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
+}
+
+void get_rgb(t_cube *cube, char *line, int *color)
+{
+    char **color_parts;
+    int i;
+
+    i = 0;
+    color_parts = ft_split(line + 2, ',');
+    if (!color_parts)
+        return;
+    color[0] = ft_atoi(color_parts[0]);
+    color[1] = ft_atoi(color_parts[1]);
+    color[2] = ft_atoi(color_parts[2]);
+    while (color_parts[i])
+    {
+        free(color_parts[i]);
+        i++;
+    }
+    free(color_parts);
+}
+
+int *get_color(t_cube *cube, char *file, char *type)
 {
     int fd;
     char *row;
@@ -58,7 +67,7 @@ int *get_color(char *file, char *type)
     while (row)
     {
         if (strncmp(row, type, 1) == 0)
-            get_rgb(row + 2, color);
+            get_rgb(cube, row, color);
         free(row);
         row = get_next_line(fd);
     }
