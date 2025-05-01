@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 00:25:47 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/07 16:42:43 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:16:01 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,30 @@ void init_data(t_cube *cube, t_data *data, char *file)
     init_texture_buffer(cube, data);
 }
 
+void verify_information(t_cube *cube, char *file)
+{
+    int fd;
+    char *line;
+    int count;
+
+    fd = open(file, O_RDONLY);
+    line = get_next_line(fd);
+    count = 0;
+    while (line)
+    {
+        if (ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0 || ft_strncmp(line, "SO ", 3) == 0 ||
+        ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0)
+            count++;
+        free(line);
+        line = get_next_line(fd);
+    }
+    close(fd);
+    if (line)
+        free(line);
+    if (count != 6)
+        print_error(cube, "ERROR: fail in map information\n");
+}
+
 void init_cube(t_cube *cube, char *file)
 {
     cube->data = ft_calloc(1, sizeof(t_data));
@@ -111,6 +135,7 @@ void init_cube(t_cube *cube, char *file)
         print_error(cube, "ERROR: Failed to create image\n");
     cube->img->addr = mlx_get_data_addr(cube->img->img, &cube->img->bpp, &cube->img->size_line, &cube->img->endian);
     verify_map(cube, cube->data);
+    verify_information(cube, file);
     check_color(cube, file);
     init_color(cube, cube->data, file);
 }

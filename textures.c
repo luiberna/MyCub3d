@@ -6,7 +6,7 @@
 /*   By: luiberna <luiberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:44:25 by luiberna          #+#    #+#             */
-/*   Updated: 2025/02/07 16:45:05 by luiberna         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:07:46 by luiberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ char **get_textures(char *file)
     line = get_next_line(fd);
     while (line)
     {
-        if (ft_strncmp(line, "NO", 2) == 0) 
+        if (ft_strncmp(line, "NO", 2) == 0 && !textures[N]) 
             textures[N] = get_texture_loc(ft_strtrim(line + 3, "\n"));
-        else if (ft_strncmp(line, "EA", 2) == 0)
+        else if (ft_strncmp(line, "EA", 2) == 0 && !textures[E])
             textures[E] = get_texture_loc(ft_strtrim(line + 3, "\n"));
-        else if (ft_strncmp(line, "SO", 2) == 0)
+        else if (ft_strncmp(line, "SO", 2) == 0 && !textures[S])
             textures[S] = get_texture_loc(ft_strtrim(line + 3, "\n"));
-        else if (ft_strncmp(line, "WE", 2) == 0)
+        else if (ft_strncmp(line, "WE", 2) == 0 && !textures[W])
             textures[W] = get_texture_loc(ft_strtrim(line + 3, "\n"));
         i++;
         free(line);
